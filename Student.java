@@ -4,36 +4,35 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
-// Idhu MODEL / ENTITY class.
-// Idhu than database la "students" nu oru table create pannum.
-// Class oda ஒவ்வொரு field-um, table oda ஒரு column.
+// Entity class that maps to the "students" table in the database.
+// Each field of this class is a column in the table.
 
-@Entity  // Idhu oru database table nu Spring ku sollrom
+@Entity // Marks this class as a database table
 @Table(name = "students")
 public class Student {
 
-    @Id  // Idhu Primary Key (unique identifier)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Automatic aa 1,2,3.. nu id generate aagum
+    @Id // Primary key (unique identifier)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // ID is generated automatically: 1, 2, 3...
     private Long id;
 
-    @NotBlank(message = "Name kandippa kudukanum")  // Empty aa iruntha error varum
+    @NotBlank(message = "Name is required") // Validation fails if empty
     private String name;
 
-    @Email(message = "Sariyana email kudunga")
+    @Email(message = "Please enter a valid email")
     private String email;
 
-    @NotBlank(message = "Department kandippa kudukanum")
+    @NotBlank(message = "Department is required")
     private String department;
 
     private Integer age;
 
     private Double marks;
 
-    // Empty constructor - JPA ku idhu kandippa venum
+    // No-args constructor, required by JPA
     public Student() {
     }
 
-    // All-args constructor - object create panna easy aa irukum
+    // All-args constructor for creating objects easily
     public Student(String name, String email, String department, Integer age, Double marks) {
         this.name = name;
         this.email = email;
@@ -42,7 +41,7 @@ public class Student {
         this.marks = marks;
     }
 
-    // Getters and Setters - ovvoru field oda value ah edukkavum, set pannavum
+    // Getters and setters
     public Long getId() {
         return id;
     }
