@@ -6,19 +6,19 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-// Idhu REPOSITORY layer.
-// Idhu than DIRECT aa database oda pesum (save, find, delete, update).
-// JpaRepository extend panna, namba onnume code pannama
-// save(), findAll(), findById(), deleteById() mathiri methods automatic aa kidaikum!
+// Repository layer.
+// Talks directly to the database (save, find, update, delete).
+// By extending JpaRepository, methods like save(), findAll(), findById()
+// and deleteById() are provided automatically, with no extra code.
 
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    // Custom method - department vachi students ah thedanum nu vachu
-    // Method name mattum correct aa irunthaal, Spring automatic aa
-    // query create pannikum (idhu "Query Method" nu solluvanga)
+    // Custom query method: finds students by department.
+    // Spring generates the query automatically from the method name
+    // (this is called a "query method").
     List<Student> findByDepartment(String department);
 
-    // Name la search panna (contains - andha keyword iruntha match aagum)
+    // Searches by name (case-insensitive, matches if the name contains the keyword)
     List<Student> findByNameContainingIgnoreCase(String name);
 }
