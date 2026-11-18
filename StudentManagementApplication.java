@@ -3,8 +3,8 @@ package com.example.studentmanagement;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-// Idhu than namba project oda MAIN class.
-// Idha than run pandrom - itho than application start aagum.
+// Main class of the project.
+// Running this class starts the Spring Boot application.
 @SpringBootApplication
 public class StudentManagementApplication {
 
