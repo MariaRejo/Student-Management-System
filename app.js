@@ -1,6 +1,6 @@
-// Idhu than FRONTEND JS. Idhu namba Spring Boot backend oda
-// REST API ah "fetch()" vachi call pannum. Same origin (localhost:8080)
-// la irundhu than call panrom, so CORS problem varathu.
+// This is the FRONTEND JS. It calls our Spring Boot backend's
+// REST API using fetch(). Since requests go to the same origin
+// (localhost:8080), there are no CORS problems.
 
 const API_URL = '/api/students';
 
@@ -13,10 +13,10 @@ const cancelBtn = document.getElementById('cancelBtn');
 const studentIdField = document.getElementById('studentId');
 const searchInput = document.getElementById('searchInput');
 
-// Page load aana odane, ella students-um fetch pannu
+// As soon as the page loads, fetch all students
 document.addEventListener('DOMContentLoaded', loadStudents);
 
-// Form submit pannumbothu - Add or Update
+// On form submit - Add or Update
 form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
@@ -60,7 +60,7 @@ form.addEventListener('submit', async (e) => {
 
 cancelBtn.addEventListener('click', resetForm);
 
-// Ella students-um fetch panni table la kaatu
+// Fetch all students and show them in the table
 async function loadStudents() {
     try {
         const response = await fetch(API_URL);
@@ -71,7 +71,7 @@ async function loadStudents() {
     }
 }
 
-// Table row-a render pannu
+// Render the table rows
 function renderTable(students) {
     tableBody.innerHTML = '';
 
@@ -99,7 +99,7 @@ function renderTable(students) {
     });
 }
 
-// Edit button click pannumbothu, form la data fill pannu
+// When the Edit button is clicked, fill the form with the student's data
 function editStudent(student) {
     studentIdField.value = student.id;
     document.getElementById('name').value = student.name;
@@ -114,9 +114,9 @@ function editStudent(student) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Delete button click pannumbothu
+// When the Delete button is clicked
 async function deleteStudent(id) {
-    if (!confirm('Sure ah delete panna?')) return;
+    if (!confirm('Are you sure you want to delete this student?')) return;
 
     try {
         const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
@@ -128,7 +128,7 @@ async function deleteStudent(id) {
     }
 }
 
-// Form ah reset panni "Add" mode ku thirumba varum
+// Reset the form and switch back to "Add" mode
 function resetForm() {
     form.reset();
     studentIdField.value = '';
@@ -160,7 +160,7 @@ async function searchStudents() {
     }
 }
 
-// Toast message kaatu (bottom la small popup)
+// Show a toast message (small popup at the bottom)
 function showToast(message, isError = false) {
     const toast = document.getElementById('toast');
     toast.textContent = message;
@@ -168,7 +168,7 @@ function showToast(message, isError = false) {
     setTimeout(() => { toast.className = 'toast'; }, 2500);
 }
 
-// XSS thadukka - HTML characters ah escape pannu
+// Prevent XSS - escape HTML characters
 function escapeHtml(str) {
     const div = document.createElement('div');
     div.textContent = str;
