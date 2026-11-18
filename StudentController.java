@@ -10,27 +10,27 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// Idhu CONTROLLER layer.
-// Idhu than OUTSIDE world (Postman, browser, frontend) kooda pesura layer.
-// "URL" (endpoint) request varum bothu, edhu method call aagum nu
-// idhu than decide pannum. Idhu neraya Service ah call pannum.
+// Controller layer.
+// Handles incoming requests from clients (Postman, browser, front end).
+// Decides which method runs for each URL (endpoint) and delegates
+// the work to the Service layer.
 
-@RestController  // Idhu REST API responses (JSON) return pannum nu sollrom
-@RequestMapping("/api/students")  // Base URL - ella endpoints-um /api/students la start aagum
+@RestController // Returns REST API responses (JSON)
+@RequestMapping("/api/students") // Base URL: all endpoints start with /api/students
 public class StudentController {
 
     @Autowired
     private StudentService studentService;
 
     // GET http://localhost:8080/api/students
-    // Ella students-oda list ah kudukum
+    // Returns the list of all students
     @GetMapping
     public List<Student> getAllStudents() {
         return studentService.getAllStudents();
     }
 
     // GET http://localhost:8080/api/students/1
-    // Oru particular student ID vachi kudukum
+    // Returns a single student by ID
     @GetMapping("/{id}")
     public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
         return studentService.getStudentById(id)
@@ -39,7 +39,7 @@ public class StudentController {
     }
 
     // POST http://localhost:8080/api/students
-    // Body la JSON data anupi pudhu student ah create panna
+    // Creates a new student from the JSON request body
     @PostMapping
     public ResponseEntity<Student> createStudent(@Valid @RequestBody Student student) {
         Student saved = studentService.createStudent(student);
@@ -47,7 +47,7 @@ public class StudentController {
     }
 
     // PUT http://localhost:8080/api/students/1
-    // Already iruka student data ah update panna
+    // Updates an existing student
     @PutMapping("/{id}")
     public ResponseEntity<Student> updateStudent(@PathVariable Long id, @Valid @RequestBody Student student) {
         try {
@@ -58,7 +58,7 @@ public class StudentController {
     }
 
     // DELETE http://localhost:8080/api/students/1
-    // Student ah delete panna
+    // Deletes a student
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
         studentService.deleteStudent(id);
@@ -66,14 +66,14 @@ public class StudentController {
     }
 
     // GET http://localhost:8080/api/students/department/CSE
-    // Department vachi filter panna
+    // Filters students by department
     @GetMapping("/department/{department}")
     public List<Student> getByDepartment(@PathVariable String department) {
         return studentService.getStudentsByDepartment(department);
     }
 
     // GET http://localhost:8080/api/students/search?name=raj
-    // Name vachi search panna
+    // Searches students by name
     @GetMapping("/search")
     public List<Student> searchByName(@RequestParam String name) {
         return studentService.searchByName(name);
