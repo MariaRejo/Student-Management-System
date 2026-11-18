@@ -8,34 +8,34 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-// Idhu SERVICE layer.
-// Idhu than BUSINESS LOGIC irukura idam.
-// Controller neraya Repository ah call pannadhu, Service vazhi than pannum.
-// "Enna panna vendum" nu logic ellam idha than eluthuvom
-// (e.g., validation, calculation, multiple repository calls combine panradhu)
+// Service layer.
+// Holds the business logic of the application.
+// The Controller calls the Service, and the Service calls the Repository.
+// Logic such as validation, calculations or combining several repository
+// calls belongs here.
 
-@Service  // Idhu oru Service class nu Spring ku sollrom
+@Service // Marks this class as a Spring service
 public class StudentService {
 
-    @Autowired  // Spring automatic aa StudentRepository object ah inject pannum
+    @Autowired // Spring injects the StudentRepository object automatically
     private StudentRepository studentRepository;
 
-    // Ella students-um edukka
+    // Get all students
     public List<Student> getAllStudents() {
         return studentRepository.findAll();
     }
 
-    // Oru particular student ah ID vachi edukka
+    // Get a single student by ID
     public Optional<Student> getStudentById(Long id) {
         return studentRepository.findById(id);
     }
 
-    // Pudhu student ah save panna
+    // Save a new student
     public Student createStudent(Student student) {
         return studentRepository.save(student);
     }
 
-    // Already iruka student ah update panna
+    // Update an existing student
     public Student updateStudent(Long id, Student updatedStudent) {
         return studentRepository.findById(id).map(student -> {
             student.setName(updatedStudent.getName());
@@ -47,17 +47,17 @@ public class StudentService {
         }).orElseThrow(() -> new RuntimeException("Student not found with id: " + id));
     }
 
-    // Student ah delete panna
+    // Delete a student
     public void deleteStudent(Long id) {
         studentRepository.deleteById(id);
     }
 
-    // Department vachi students ah thedanum
+    // Get students by department
     public List<Student> getStudentsByDepartment(String department) {
         return studentRepository.findByDepartment(department);
     }
 
-    // Name vachi search panna
+    // Search students by name
     public List<Student> searchByName(String name) {
         return studentRepository.findByNameContainingIgnoreCase(name);
     }
